@@ -27,7 +27,9 @@ namespace Client
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Connecteur.Connect(ip.Text);
+            //Connecteur.Connect(ip.Text);
+
+            //Créer un attribut Pour recevoir le message de reponse
         }
     }
 }

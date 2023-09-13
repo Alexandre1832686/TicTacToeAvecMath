@@ -13,7 +13,7 @@
         <Image Source="img/o.png" Margin="115,114,594,237"></Image>
 
 
-        <Label Margin="669,105,32,278">non connecté</Label>
+        <Label x:Name="Test" Margin="670,105,31,278">non connecté</Label>
         <Label Margin="620,190,136,213">ip: </Label>
         <TextBox Margin="669,187,32,210" x:Name="ip"></TextBox>
     </Grid>
