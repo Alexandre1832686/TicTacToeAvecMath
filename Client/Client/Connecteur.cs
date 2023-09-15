@@ -9,42 +9,129 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using static System.Net.Mime.MediaTypeNames;
+using System.Windows;
 
 namespace Client
 {
     public static class Connecteur
     {
-        public static async void Connect(string ip)
+        public static string reponse { get; set; }
+        static Socket sender;
+        public static void Client()
         {
-            IPHostEntry ipHostInfo = await Dns.GetHostEntryAsync("localhost");
-            IPAddress ipAddress = ipHostInfo.AddressList[0];
-            IPEndPoint ipend = new IPEndPoint(ipAddress, 1100);
-            string reponse;
 
-            Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-            await client.ConnectAsync(ipend);
-            while (true)
+            try
             {
-                string messageJson = JsonSerializer.Serialize("allo");
-                var jsonBytes = Encoding.UTF8.GetBytes(messageJson);
+               
+                IPHostEntry host = Dns.GetHostEntry("localhost");
+                IPAddress ipAddress = host.AddressList[0];
+                IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11000);
 
-                _ = await client.SendAsync(jsonBytes,SocketFlags.None);
+                // Create a TCP/IP  socket.
+                sender = new Socket(SocketType.Stream, ProtocolType.Tcp);
+
                 
-                var buffer = new byte[1024];
-                var received = await client.ReceiveAsync(buffer, SocketFlags.None);
-                var response = Encoding.UTF8.GetString(buffer, 0, received);
+
+                try
                 {
-                     reponse = JsonSerializer.Deserialize<string>(response);
-                    break;
+                    sender.Connect(remoteEP);
+
+                    EnvoieReponse("start");
+
+                    if (reponse == "\"end\"")
+                    {
+                        // Release the socket.
+                        sender.Shutdown(SocketShutdown.Both);
+                        sender.Close();
+                    }
+
+                    if (reponse == "\"OK\"") ;
+                    {
+                        CommencerPartie();
+                    }
+                    
+
                 }
-                Messagerecu(reponse);
+                catch (ArgumentNullException ane)
+                {
+                    Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
+                }
+                catch (SocketException se)
+                {
+                    Console.WriteLine("SocketException : {0}", se.ToString());
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Unexpected exception : {0}", e.ToString());
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
             }
         }
 
-        public static string Messagerecu(string x)
+        static void CommencerPartie()
         {
-            return x;
+
+
+            //Envoie Commence...
+            //Recoit coord...
+            //traite coord...
+            //renvoie bool...
+            //recoit ak...
+            //envoie coord...
+
+            if (reponse != null)
+            {
+                bool valid = int.TryParse(reponse[1].ToString(), out int x);
+                bool valid2 = int.TryParse(reponse[3].ToString(), out int y);
+                if (valid && valid2)
+                {
+                    bool valid3 = Controller.JouerCoup(x, y, 1);
+                    reponse = valid3.ToString();
+                }
+            }
+        }
+
+        public static void EnvoieReponse(string m)
+        {
+            string jsonString = JsonSerializer.Serialize(m);
+
+            // Encode the data string into a byte array.
+            byte[] msg = Encoding.ASCII.GetBytes(jsonString + "<EOF>");
+
+            // Send the data through the socket.
+            int bytesSent = sender.Send(msg);
+
+            Recevoir();
+        }
+
+        public static void Recevoir()
+        {
+            byte[] bytes;
+            string data = null;
+
+            while (true)
+            {
+                bytes = new byte[1024];
+                int bytesRec = sender.Receive(bytes);
+                data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
+                if (data.IndexOf("<EOF>") > -1)
+                {
+                    break;
+                }
+            }
+
+            int pos = data.IndexOf("<EOF>");
+            if (pos >= 0)
+            {
+                // String after founder
+                data = data.Remove(pos);
+            }
+
+            reponse = JsonSerializer.Deserialize<string>(data);
         }
     }
 }

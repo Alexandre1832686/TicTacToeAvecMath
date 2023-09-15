@@ -7,14 +7,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Margin="669,244,32,163" Click="Button_Click">test</Button>
+        <Button Margin="669,244,32,130" Click="Button_Click">Envoie reponse</Button>
         <Image Source="img/board.jpg" Margin="-105,0,158,23"></Image>
         <Image Source="img/x.jpg" Margin="327,114,382,237"></Image>
         <Image Source="img/o.png" Margin="115,114,594,237"></Image>
 
 
         <Label x:Name="Test" Margin="670,105,31,278">non connecté</Label>
-        <Label Margin="620,190,136,213">ip: </Label>
+        <Label Margin="592,190,136,213">ip: </Label>
         <TextBox Margin="669,187,32,210" x:Name="ip"></TextBox>
+        <Button Margin="670,332,31,42" Click="Button_Click2" Content="Maj"/>
+        <TextBox Margin="669,137,32,260" x:Name="msg"/>
+        <Label Margin="592,137,136,266" Content="Message:"/>
     </Grid>
 </Window>

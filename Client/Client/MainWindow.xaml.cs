@@ -23,13 +23,18 @@ namespace Client
         public MainWindow()
         {
             InitializeComponent();
+            Connecteur.Client();
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //Connecteur.Connect(ip.Text);
+            Connecteur.EnvoieReponse(msg.Text);
+        }
 
-            //Créer un attribut Pour recevoir le message de reponse
+        private void Button_Click2(object sender, RoutedEventArgs e)
+        {
+            Test.Content = Connecteur.reponse;
         }
     }
 }
