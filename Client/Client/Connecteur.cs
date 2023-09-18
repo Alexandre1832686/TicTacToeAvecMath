@@ -28,8 +28,6 @@ namespace Client
 
                 // Create a TCP/IP  socket.
                 sender = new Socket(SocketType.Stream, ProtocolType.Tcp);
-
-                Connection();
             }
             catch (Exception e)
             {
@@ -42,20 +40,7 @@ namespace Client
             try
             {
                 sender.Connect(remoteEP);
-
-                EnvoieReponse("start");
-
-                if (reponse == "\"end\"")
-                {
-                    // Release the socket.
-                    sender.Shutdown(SocketShutdown.Both);
-                    sender.Close();
-                }
-
-                if (reponse == "\"OK\"") ;
-                {
-                    CommencerPartie();
-                }
+                EnvoieReponse("CAT");
             }
             catch (ArgumentNullException ane)
             {
@@ -92,7 +77,18 @@ namespace Client
                 }
             }
         }
+        public static void EnvoieCoup(string m)
+        {
+            string jsonString = JsonSerializer.Serialize(m);
 
+            // Encode the data string into a byte array.
+            byte[] msg = Encoding.ASCII.GetBytes(jsonString + "<EOF>");
+
+            // Send the data through the socket.
+            int bytesSent = sender.Send(msg);
+
+            Recevoir("OK");
+        }
         public static void EnvoieReponse(string m)
         {
             string jsonString = JsonSerializer.Serialize(m);
@@ -103,10 +99,10 @@ namespace Client
             // Send the data through the socket.
             int bytesSent = sender.Send(msg);
 
-            Recevoir();
+            Recevoir("coord");
         }
 
-        public static void Recevoir()
+        public static void Recevoir(string message)
         {
             byte[] bytes;
             string data = null;
@@ -130,6 +126,22 @@ namespace Client
             }
 
             reponse = JsonSerializer.Deserialize<string>(data);
+
+            if(message != "coord")
+            {
+                if (reponse == message)
+                {
+                    //ok
+                }
+                else
+                {
+                    //pas ok... envoyer message pas corect
+                }
+            }
+            else
+            {
+                Controller.JouerCoup(Convert.ToInt32(reponse[0]), Convert.ToInt32(reponse[3]), 1);
+            }
         }
     }
 }

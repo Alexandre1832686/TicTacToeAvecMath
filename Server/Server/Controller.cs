@@ -27,6 +27,9 @@ namespace Server
             if (ValiderCoup(x, y, joueur))
             {
                 Tableau[x, y] = joueur;
+                MainWindow.RefreshBoard(Tableau);
+                Connecteur.EnvoieCoup(x + "," + y);
+               
                 return true;
             }
             else

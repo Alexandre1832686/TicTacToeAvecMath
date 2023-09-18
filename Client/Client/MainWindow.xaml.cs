@@ -21,7 +21,7 @@ namespace Client
     public partial class MainWindow : Window
     {
         public static Image[] imgs = new Image[9];
-        public static Image[] xonull = new Image[3];
+       
 
         public MainWindow()
         {
@@ -38,20 +38,10 @@ namespace Client
             imgs[7] = img8;
             imgs[8] = img9;
 
-            xonull[0] = img8;
-            xonull[1] = img7;
-            xonull[2] = img9;
+            
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //Connecteur.EnvoieReponse(msg.Text);
-        }
-
-        private void Button_Click2(object sender, RoutedEventArgs e)
-        {
-           // Test.Content = Connecteur.reponse;
-        }
+        
 
 
         public static void RefreshBoard(int[,] tab)
@@ -63,30 +53,104 @@ namespace Client
                 {
                     if (tab[i, j] == 0)
                     {
-                        imgs[compteur] = xonull[2];
+                        
+                        imgs[compteur].Source = new BitmapImage(new Uri(@"/img/null.png", UriKind.Relative));
                         compteur++;
                     }
                     else if (tab[i, j] == 1)
                     {
-                        imgs[compteur] = xonull[0];
+                        imgs[compteur].Source = new BitmapImage(new Uri(@"/img/o.png", UriKind.Relative));
                         compteur++;
                     }
                     else if(tab[i, j] == 2)
                     {
-                        imgs[compteur] = xonull[1];
+                        imgs[compteur].Source = new BitmapImage(new Uri(@"/img/x.jpg", UriKind.Relative));
                         compteur++;
                     }
                 }
             }
         }
+        private void click1(object sender, RoutedEventArgs e)
+        {
+            if (Controller.JouerCoup(0, 0, 2))
+            {
+                Controller.Tableau[0, 0] = 2;
+                RefreshBoard(Controller.Tableau);
+            }
+        }
+        private void click2(object sender, RoutedEventArgs e)
+        {
+            if (Controller.JouerCoup(1, 0, 2))
+            {
+                Controller.Tableau[1, 0] = 2;
+                RefreshBoard(Controller.Tableau);
+            }
+        }
+        private void click3(object sender, RoutedEventArgs e)
+        {
+            if (Controller.JouerCoup(2, 0, 2))
+            {
+                Controller.Tableau[2, 0] = 2;
+                RefreshBoard(Controller.Tableau);
+            }
+        }
+        private void click4(object sender, RoutedEventArgs e)
+        {
+            if (Controller.JouerCoup(0, 1, 2))
+            {
+                Controller.Tableau[0, 1] = 2;
+                RefreshBoard(Controller.Tableau);
+            }
+        }
+        private void click5(object sender, RoutedEventArgs e)
+        {
+            if (Controller.JouerCoup(1, 1, 2))
+            {
+                Controller.Tableau[1, 1] = 2;
+                RefreshBoard(Controller.Tableau);
+            }
+        }
+        private void click6(object sender, RoutedEventArgs e)
+        {
+            if (Controller.JouerCoup(2, 1, 2))
+            {
+                Controller.Tableau[2, 1] = 2;
+                RefreshBoard(Controller.Tableau);
+            }
+        }
+        private void click7(object sender, RoutedEventArgs e)
+        {
+            if (Controller.JouerCoup(0, 2, 2))
+            {
+                Controller.Tableau[0, 2] = 2;
+                RefreshBoard(Controller.Tableau);
+            }
+        }
+        private void click8(object sender, RoutedEventArgs e)
+        {
+            if (Controller.JouerCoup(1, 2, 2))
+            {
+                Controller.Tableau[1, 2] = 2;
+                RefreshBoard(Controller.Tableau);
+            }
+        }
+        private void click9(object sender, RoutedEventArgs e)
+        {
+            if (Controller.JouerCoup(2, 2, 2))
+            {
+                Controller.Tableau[2, 2] = 2;
+                RefreshBoard(Controller.Tableau);
+            }
+        }
 
         private void Button_Click3(object sender, RoutedEventArgs e)
         {
-            Controller.Tableau[0, 1] = 1;
-            Controller.Tableau[1, 0] = 1;
-            Controller.Tableau[1, 2] = 1;
 
-            RefreshBoard(Controller.Tableau);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Connecteur.Connection();
         }
     }
 }

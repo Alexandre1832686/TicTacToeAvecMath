@@ -17,31 +17,27 @@ namespace Server
         static Socket server;
         static Socket listener;
         static int compteur;
+        static IPEndPoint localEndPoint;
         public static void Server()
         {
             compteur = 0;
             IPHostEntry host = Dns.GetHostEntry("localhost");
             IPAddress ipAddress = host.AddressList[0];
-            IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 11000);
+            localEndPoint = new IPEndPoint(ipAddress, 11000);
             listener = new Socket(SocketType.Stream, ProtocolType.Tcp);
-            
 
+            Connection();
+        }
 
+        static void Connection()
+        {
             try
             {
-
-
                 listener.Bind(localEndPoint);
 
                 listener.Listen(10);
 
-
-                
-
-
                 server = listener.Accept();
-
-
 
                 byte[] bytes;
                 string data = null;
@@ -66,45 +62,22 @@ namespace Server
 
                 string valid = JsonSerializer.Deserialize<string>(data);
 
-                if (valid == "start")
+                if (valid == "CAT")
                 {
-                    //ok
+                    
                 }
                 else
                 {
-                    //remettre en ecoute
+                    EnvoieReponse("end");
                 }
-
-
-                //CommencerPartie();
-
-
-                if (Recevoir()=="start")
-                {
-                    //ok
-                }
-                else
-                {
-                    Recevoir();
-                }
-
-
-
-
-                //server.Shutdown(SocketShutdown.Both);
-                //  server.Close();
-
             }
             catch (Exception e)
             {
             }
-
         }
 
         static void CommencerPartie()
         {
-
-
             bool gameOver = false;
             do { 
                 //traitement de la partie
@@ -113,7 +86,7 @@ namespace Server
         }
 
 
-        public static void EnvoieMessage(string m)
+        public static void EnvoieCoup(string m)
         {
             string jsonString = JsonSerializer.Serialize(m);
 
@@ -121,12 +94,24 @@ namespace Server
             byte[] msg = Encoding.ASCII.GetBytes(jsonString + "<EOF>");
 
             // Send the data through the socket.
-            int bytesSent = listener.Send(msg);
+            int bytesSent = server.Send(msg);
 
-            Recevoir();
+            Recevoir("OK");
+        }
+        public static void EnvoieReponse(string m)
+        {
+            string jsonString = JsonSerializer.Serialize(m);
+
+            // Encode the data string into a byte array.
+            byte[] msg = Encoding.ASCII.GetBytes(jsonString + "<EOF>");
+
+            // Send the data through the socket.
+            int bytesSent = server.Send(msg);
+
+            Recevoir("CAT");
         }
 
-        public static string Recevoir()
+        public static void Recevoir(string message)
         {
             byte[] bytes;
             string data = null;
@@ -150,7 +135,22 @@ namespace Server
             }
 
             Message = JsonSerializer.Deserialize<string>(data);
-            return Message;
+
+            if (message != "coord")
+            {
+                if (Message == message)
+                {
+                    //ok
+                }
+                else
+                {
+                    //pas ok... envoyer message pas corect
+                }
+            }
+            else
+            {
+                Controller.JouerCoup(Convert.ToInt32(Message[0]), Convert.ToInt32(Message[3]), 1);
+            }
         }
     }
 }
