@@ -86,9 +86,6 @@ namespace Client
             return false;
         }
 
-        static void RefreshBoard()
-        {
-
-        }
+        
     }
 }

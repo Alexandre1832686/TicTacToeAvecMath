@@ -17,19 +17,36 @@
         <Button Margin="334,114,383,237">
             <Image Source="img/o.png" x:Name="img3"></Image>
         </Button>
-
-
+        <Button Margin="119,216,598,135">
+            <Image Source="img/o.png" x:Name="img4"></Image>
+        </Button>
+        <Button Margin="227,216,490,135">
+            <Image Source="img/o.png" x:Name="img5"></Image>
+        </Button>
+        <Button Margin="334,216,383,135">
+            <Image Source="img/o.png" x:Name="img6"></Image>
+        </Button>
+        <Button Margin="119,316,598,35">
+            <Image Source="img/o.png" x:Name="img7"></Image>
+        </Button>
+        <Button Margin="227,316,490,35">
+            <Image Source="img/x.jpg" x:Name="img8" Width="83"></Image>
+        </Button>
+        <Button Margin="334,316,383,35">
+            <Image Source="img/null.png" x:Name="img9"></Image>
+        </Button>
 
 
 
         <Button Margin="669,244,32,163" Click="Button_Click">connect</Button>
         <Label Margin="592,190,136,213">ip: </Label>
         <Label Margin="669,105,32,278">non connecté</Label>
-        <Label Margin="620,190,136,213">ip: </Label>
+        
         <TextBox Margin="669,187,32,210" x:Name="ip"></TextBox>
-        
-        
-        
-        
+        <Button Margin="669,298,32,109" Click="Button_Click3" Content="connect"/>
+
+
+
+
     </Grid>
 </Window>

@@ -36,7 +36,7 @@ namespace Server
                 listener.Listen(10);
 
 
-                Console.WriteLine("Connection en cours ...");
+                
 
 
                 server = listener.Accept();

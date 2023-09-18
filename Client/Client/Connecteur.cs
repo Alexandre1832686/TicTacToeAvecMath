@@ -17,13 +17,14 @@ namespace Client
     {
         public static string reponse { get; set; }
         static Socket sender;
+        static IPEndPoint remoteEP;
         public static void Client()
         {
             try
             {
                 IPHostEntry host = Dns.GetHostEntry("localhost");
                 IPAddress ipAddress = host.AddressList[0];
-                IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11000);
+                remoteEP = new IPEndPoint(ipAddress, 11000);
 
                 // Create a TCP/IP  socket.
                 sender = new Socket(SocketType.Stream, ProtocolType.Tcp);
@@ -72,6 +73,7 @@ namespace Client
 
         static void CommencerPartie()
         {
+            MainWindow.RefreshBoard(Controller.Tableau);
             //Envoie Commence...
             //Recoit coord...
             //traite coord...
