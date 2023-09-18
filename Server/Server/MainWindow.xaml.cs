@@ -23,6 +23,18 @@ namespace Server
         public MainWindow()
         {
             InitializeComponent();
+            Connecteur.Server();
+            
+        }
+
+        private void Maj_Click(object sender, RoutedEventArgs e)
+        {
+            Test.Text = Connecteur.Message;
+        }
+
+        private void start_Click(object sender, RoutedEventArgs e)
+        {
+            Connecteur.EnvoieMessage("ok");
         }
     }
 }

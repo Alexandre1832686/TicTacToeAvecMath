@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <TextBlock Name="Test" Margin="280,109,254,176">sd</TextBlock>
+        <Button x:Name="Maj" Margin="45,184,558,176" Click="Maj_Click">maj</Button>
+        <Button x:Name="start" Margin="476,184,127,176" Click="start_Click">Envoie Message</Button>
     </Grid>
 </Window>

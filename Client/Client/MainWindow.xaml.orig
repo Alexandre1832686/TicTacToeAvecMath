@@ -7,6 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+<<<<<<< HEAD
+=======
+        <Button Margin="669,244,32,130" Click="Button_Click">Envoie reponse</Button>
+>>>>>>> c64a288d9f6707bc20c043a8184cf832c82b4513
         <Image Source="img/board.jpg" Margin="-105,0,158,23"></Image>
         <Button Margin="119,114,598,237">
             <Image Source="img/o.png" x:Name="img1"></Image>
@@ -19,11 +23,11 @@
         </Button>
 
 
+<<<<<<< HEAD
 
 
 
         <Button Margin="669,244,32,163" Click="Button_Click">connect</Button>
-        <Label Margin="592,190,136,213">ip: </Label>
         <Label Margin="669,105,32,278">non connecté</Label>
         <Label Margin="620,190,136,213">ip: </Label>
         <TextBox Margin="669,187,32,210" x:Name="ip"></TextBox>
@@ -31,5 +35,13 @@
         
         
         
+=======
+        <Label x:Name="Test" Margin="670,105,31,278">non connecté</Label>
+        <Label Margin="592,190,136,213">ip: </Label>
+        <TextBox Margin="669,187,32,210" x:Name="ip"></TextBox>
+        <Button Margin="670,332,31,42" Click="Button_Click2" Content="Maj"/>
+        <TextBox Margin="669,137,32,260" x:Name="msg"/>
+        <Label Margin="592,137,136,266" Content="Message:"/>
+>>>>>>> c64a288d9f6707bc20c043a8184cf832c82b4513
     </Grid>
 </Window>
