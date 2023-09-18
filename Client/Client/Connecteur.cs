@@ -19,10 +19,8 @@ namespace Client
         static Socket sender;
         public static void Client()
         {
-
             try
             {
-               
                 IPHostEntry host = Dns.GetHostEntry("localhost");
                 IPAddress ipAddress = host.AddressList[0];
                 IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11000);
@@ -30,41 +28,7 @@ namespace Client
                 // Create a TCP/IP  socket.
                 sender = new Socket(SocketType.Stream, ProtocolType.Tcp);
 
-                
-
-                try
-                {
-                    sender.Connect(remoteEP);
-
-                    EnvoieReponse("start");
-
-                    if (reponse == "\"end\"")
-                    {
-                        // Release the socket.
-                        sender.Shutdown(SocketShutdown.Both);
-                        sender.Close();
-                    }
-
-                    if (reponse == "\"OK\"") ;
-                    {
-                        CommencerPartie();
-                    }
-                    
-
-                }
-                catch (ArgumentNullException ane)
-                {
-                    Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
-                }
-                catch (SocketException se)
-                {
-                    Console.WriteLine("SocketException : {0}", se.ToString());
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Unexpected exception : {0}", e.ToString());
-                }
-
+                Connection();
             }
             catch (Exception e)
             {
@@ -72,10 +36,42 @@ namespace Client
             }
         }
 
+        public static void Connection()
+        {
+            try
+            {
+                sender.Connect(remoteEP);
+
+                EnvoieReponse("start");
+
+                if (reponse == "\"end\"")
+                {
+                    // Release the socket.
+                    sender.Shutdown(SocketShutdown.Both);
+                    sender.Close();
+                }
+
+                if (reponse == "\"OK\"") ;
+                {
+                    CommencerPartie();
+                }
+            }
+            catch (ArgumentNullException ane)
+            {
+                Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
+            }
+            catch (SocketException se)
+            {
+                Console.WriteLine("SocketException : {0}", se.ToString());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Unexpected exception : {0}", e.ToString());
+            }
+        }
+
         static void CommencerPartie()
         {
-
-
             //Envoie Commence...
             //Recoit coord...
             //traite coord...

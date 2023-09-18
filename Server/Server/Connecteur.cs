@@ -76,23 +76,6 @@ namespace Server
                 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 //CommencerPartie();
 
 
@@ -104,22 +87,6 @@ namespace Server
                 {
                     Recevoir();
                 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -138,43 +105,9 @@ namespace Server
         {
 
 
-
             bool gameOver = false;
-            do
-            {
-
-
-                byte[] bytes;
-                string data = null;
-
-                while (true)
-                {
-                    bytes = new byte[1024];
-                    int bytesRec = server.Receive(bytes);
-                    data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
-                    if (data.IndexOf("<EOF>") > -1)
-                    {
-                        break;
-                    }
-                }
-
-                int pos = data.IndexOf("<EOF>");
-                if (pos >= 0)
-                {
-                    // String after founder
-                    data = data.Remove(pos);
-                }
-
-                Message = JsonSerializer.Deserialize<string>(data);
-                compteur++;
-                Message = Message + compteur;
-
-
-
-                byte[] msg = Encoding.ASCII.GetBytes("OK");
-                server.Send(msg);
-
-                
+            do { 
+                //traitement de la partie
 
             } while (gameOver == false);
         }
