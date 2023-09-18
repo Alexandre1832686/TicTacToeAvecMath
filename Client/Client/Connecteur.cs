@@ -98,8 +98,15 @@ namespace Client
 
             // Send the data through the socket.
             int bytesSent = sender.Send(msg);
-
-            Recevoir("coord");
+            if(m=="CAT")
+            {
+                Recevoir("coord");
+            }
+            else if (m=="OK")
+            {
+                Recevoir("CAT");
+            }
+            
         }
 
         public static void Recevoir(string message)
@@ -127,7 +134,11 @@ namespace Client
 
             reponse = JsonSerializer.Deserialize<string>(data);
 
-            if(message != "coord")
+            if(reponse == "OK")
+            {
+                EnvoieReponse("CAT");
+            }
+            else if(message != "coord")
             {
                 if (reponse == message)
                 {
@@ -140,7 +151,12 @@ namespace Client
             }
             else
             {
-                Controller.JouerCoup(Convert.ToInt32(reponse[0]), Convert.ToInt32(reponse[3]), 1);
+                if (Controller.ValiderCoup(Convert.ToInt32(reponse.Substring(0, 1)), Convert.ToInt32(reponse.Substring(2, 1)),1))
+                {
+                    Controller.Tableau[Convert.ToInt32(reponse.Substring(0, 1)), Convert.ToInt32(reponse.Substring(2, 1))] = 1;
+                    MainWindow.RefreshBoard(Controller.Tableau);
+                    EnvoieReponse("OK");
+                }
             }
         }
     }

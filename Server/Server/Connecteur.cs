@@ -107,8 +107,15 @@ namespace Server
 
             // Send the data through the socket.
             int bytesSent = server.Send(msg);
+            if (m == "CAT")
+            {
+                Recevoir("coord");
+            }
+            else if (m == "OK")
+            {
+                Recevoir("CAT");
+            }
 
-            Recevoir("CAT");
         }
 
         public static void Recevoir(string message)
@@ -136,7 +143,11 @@ namespace Server
 
             Message = JsonSerializer.Deserialize<string>(data);
 
-            if (message != "coord")
+            if (Message == "OK")
+            {
+                EnvoieReponse("CAT");
+            }
+            else if (message != "coord")
             {
                 if (Message == message)
                 {
@@ -149,8 +160,14 @@ namespace Server
             }
             else
             {
-                Controller.JouerCoup(Convert.ToInt32(Message[0]), Convert.ToInt32(Message[3]), 1);
+                if (Controller.ValiderCoup(Convert.ToInt32(Message.Substring(0, 1)), Convert.ToInt32(Message.Substring(2, 1)), 1))
+                {
+                    Controller.Tableau[Convert.ToInt32(Message.Substring(0, 1)), Convert.ToInt32(Message.Substring(2, 1))] = 2;
+                    MainWindow.RefreshBoard(Controller.Tableau);
+                    EnvoieReponse("OK");
+                }
             }
         }
     }
 }
+

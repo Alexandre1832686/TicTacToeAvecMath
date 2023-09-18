@@ -8,32 +8,23 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Image Source="img/board.jpg" Margin="-105,0,158,23"></Image>
-        <Button Margin="119,114,598,237" Click="click1">
-            <Image Source="img/o.png" x:Name="img1"></Image>
+        <Button Margin="119,114,598,237" Click="click1" x:Name="button1">
         </Button>
-        <Button Margin="227,114,490,237" Click="click2">
-            <Image Source="img/o.png" x:Name="img2"></Image>
+        <Button Margin="227,114,490,237" Click="click2" x:Name="button2">
         </Button>
-        <Button Margin="334,114,383,237" Click="click3">
-            <Image Source="img/o.png" x:Name="img3"></Image>
+        <Button Margin="334,114,383,237" Click="click3" x:Name="button3">
         </Button>
-        <Button Margin="119,216,598,135" Click="click4">
-            <Image Source="img/o.png" x:Name="img4"></Image>
+        <Button Margin="119,216,598,135" Click="click4" x:Name="button4">
         </Button>
-        <Button Margin="227,216,490,135" Click="click5">
-            <Image Source="img/o.png" x:Name="img5"></Image>
+        <Button Margin="227,216,490,135" Click="click5" x:Name="button5">
         </Button>
-        <Button Margin="334,216,383,135" Click="click6">
-            <Image Source="img/o.png" x:Name="img6"></Image>
+        <Button Margin="334,216,383,135" Click="click6" x:Name="button6">
         </Button>
-        <Button Margin="119,316,598,35" Click="click7">
-            <Image Source="img/o.png" x:Name="img7"></Image>
+        <Button Margin="119,316,598,35" Click="click7" x:Name="button7">
         </Button>
-        <Button Margin="227,316,490,35" Click="click8">
-            <Image Source="img/x.jpg" x:Name="img8" Width="83"></Image>
+        <Button Margin="227,316,490,35" Click="click8" x:Name="button8">
         </Button>
-        <Button Margin="334,316,383,35" Click="click9">
-            <Image Source="img/null.png" x:Name="img9"></Image>
+        <Button Margin="334,316,383,35" Click="click9" x:Name="button9">
         </Button>
 
         <Label Margin="669,105,32,278">non connecté</Label>

@@ -29,6 +29,7 @@ namespace Client
             if (ValiderCoup(x, y,joueur))
             {
                 Tableau[x, y] = joueur;
+                MainWindow.RefreshBoard(Controller.Tableau);
                 Connecteur.EnvoieCoup(x + "," + y);
                 return true;
             }
