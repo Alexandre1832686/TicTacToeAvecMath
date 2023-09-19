@@ -11,18 +11,19 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
-namespace Client
+namespace Server
 {
     /// <summary>
-    /// Logique d'interaction pour Winner.xaml
+    /// Logique d'interaction pour winner.xaml
     /// </summary>
-    public partial class Winner : Window
+    public partial class winner : Window
     {
-        public Winner(int gagnant)
+        public winner(int gagnant)
         {
             InitializeComponent();
-            if(gagnant == 0)
+            if (gagnant == 0)
             {
                 text.Text = "Partie nulle";
             }

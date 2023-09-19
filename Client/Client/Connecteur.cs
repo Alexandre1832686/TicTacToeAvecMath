@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using static System.Net.Mime.MediaTypeNames;
 using System.Windows;
+using System.Reflection;
 
 namespace Client
 {
@@ -85,7 +86,11 @@ namespace Client
             {
                 Recevoir("CAT");
             }
-            
+            else
+            {
+                Recevoir("OK");
+            }
+
         }
 
         public static void Recevoir(string message)
@@ -122,7 +127,8 @@ namespace Client
                 }
                 else if (reponse == "1" || reponse == "2")
                 {
-                    //end game gagnant = reponse
+                    Winner w = new Winner(Convert.ToInt32(reponse));
+                    w.Show();
                 }
                 else
                 {
@@ -132,7 +138,12 @@ namespace Client
             }
             else if (message == "coord")
             {
-                if (Controller.ValiderCoup(Convert.ToInt32(reponse.Substring(0, 1)), Convert.ToInt32(reponse.Substring(2, 1)), 1))
+                if (reponse == "1" || reponse == "2")
+                {
+                    Winner w = new Winner(Convert.ToInt32(reponse));
+                    w.Show();
+                }
+                else if (Controller.ValiderCoup(Convert.ToInt32(reponse.Substring(0, 1)), Convert.ToInt32(reponse.Substring(2, 1)), 1))
                 {
                     Controller.Tableau[Convert.ToInt32(reponse.Substring(0, 1)), Convert.ToInt32(reponse.Substring(2, 1))] = 1;
                     MainWindow.RefreshBoard(Controller.Tableau);

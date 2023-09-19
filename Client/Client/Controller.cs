@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Reflection;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,14 +23,9 @@ namespace Client
 
             if(ValiderCoupDispo(x,y)&&ValiderCoupLegal(x, y)&&ValiderCoupNombreDeTourCorrect(joueur))
             {
-                if (ValideVictoire(Tableau) == 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    Connecteur.EnvoieReponse(ValideVictoire(Tableau).ToString());
-                }
+               
+                return true;
+               
             }
             return false;
         }
@@ -41,8 +37,20 @@ namespace Client
                 dernierCoup[0] = x;
                 dernierCoup[1] = y;
                 Tableau[x, y] = joueur;
-                MainWindow.RefreshBoard(Controller.Tableau);
-                Connecteur.EnvoieCoup(x + "," + y);
+                MainWindow.RefreshBoard(Tableau);
+
+                int valid = ValideVictoire(Tableau);
+                if (valid != 0)
+                {
+                    Winner w = new Winner(valid);
+                    Connecteur.EnvoieReponse(valid.ToString());
+
+                }
+                else
+                {
+
+                    Connecteur.EnvoieReponse(x + "," + y);
+                }
                 return true;
             }
             else

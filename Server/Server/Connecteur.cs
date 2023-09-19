@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Text.Json;
 using System.Configuration;
+using System.Reflection;
 
 namespace Server
 {
@@ -104,16 +105,23 @@ namespace Server
                 }
                 else if (Message=="1" || Message == "2")
                 {
-                    //end game gagnant = Message
+                    winner w = new winner(Convert.ToInt32(Message));
+                    w.Show();
                 }
                 else
                 {
+                    MainWindow.RefreshBoard(Controller.Tableau);
                     EnvoieReponse("CAT");
                 }
             }
             else if (message == "coord")
             {
-                if (Controller.ValiderCoup(Convert.ToInt32(Message.Substring(0, 1)), Convert.ToInt32(Message.Substring(2, 1)), 2))
+                if (Message == "1" || Message == "2")
+                {
+                    winner w = new winner(Convert.ToInt32(Message));
+                    w.Show();
+                }
+                else if (Controller.ValiderCoup(Convert.ToInt32(Message.Substring(0, 1)), Convert.ToInt32(Message.Substring(2, 1)), 2))
                 {
                     Controller.Tableau[Convert.ToInt32(Message.Substring(0, 1)), Convert.ToInt32(Message.Substring(2, 1))] = 2;
                     MainWindow.RefreshBoard(Controller.Tableau);

@@ -32,7 +32,20 @@ namespace Server
                 dernierCoup[1] = y;
                 Tableau[x, y] = joueur;
                 MainWindow.RefreshBoard(Tableau);
-                Connecteur.EnvoieReponse(x + "," + y);
+
+                int valid = ValideVictoire(Tableau);
+                if (valid != 0)
+                {
+                    winner w = new winner(valid);
+                    Connecteur.EnvoieReponse(valid.ToString());
+                    
+                }
+                else
+                {
+
+                    Connecteur.EnvoieReponse(x + "," + y);
+                }
+               
                
                 return true;
             }
@@ -89,6 +102,35 @@ namespace Server
             }
 
             return false;
+        }
+
+        public static int ValideVictoire(int[,] tab)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+
+                    if (tab[j, 0] == tab[j, 1] && tab[j, 1] == tab[j, 2])
+                    {
+                        return tab[j, 0];
+                    }
+                    if (tab[0, i] == tab[1, i] && tab[1, i] == tab[2, i])
+                    {
+                        return tab[1, i];
+                    }
+                    if (tab[0, 2] == tab[1, 1] && tab[2, 0] == tab[1, 1])
+                    {
+                        return tab[1, 1];
+                    }
+                    if (tab[2, 2] == tab[1, 1] && tab[0, 0] == tab[1, 1])
+                    {
+                        return tab[1, 1];
+                    }
+                }
+            }
+
+            return 0;
         }
     }
 }
