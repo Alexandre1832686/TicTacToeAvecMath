@@ -56,27 +56,6 @@ namespace Client
             }
         }
 
-        static void CommencerPartie()
-        {
-            MainWindow.RefreshBoard(Controller.Tableau);
-            //Envoie Commence...
-            //Recoit coord...
-            //traite coord...
-            //renvoie bool...
-            //recoit ak...
-            //envoie coord...
-
-            if (reponse != null)
-            {
-                bool valid = int.TryParse(reponse[1].ToString(), out int x);
-                bool valid2 = int.TryParse(reponse[3].ToString(), out int y);
-                if (valid && valid2)
-                {
-                    bool valid3 = Controller.JouerCoup(x, y, 1);
-                    reponse = valid3.ToString();
-                }
-            }
-        }
         public static void EnvoieCoup(string m)
         {
             string jsonString = JsonSerializer.Serialize(m);
@@ -134,29 +113,22 @@ namespace Client
 
             reponse = JsonSerializer.Deserialize<string>(data);
 
-            if(reponse == "OK")
+            if (message == "OK")
             {
                 EnvoieReponse("CAT");
             }
-            else if(message != "coord")
+            else if (message == "coord")
             {
-                if (reponse == message)
-                {
-                    //ok
-                }
-                else
-                {
-                    //pas ok... envoyer message pas corect
-                }
-            }
-            else
-            {
-                if (Controller.ValiderCoup(Convert.ToInt32(reponse.Substring(0, 1)), Convert.ToInt32(reponse.Substring(2, 1)),1))
+                if (Controller.ValiderCoup(Convert.ToInt32(reponse.Substring(0, 1)), Convert.ToInt32(reponse.Substring(2, 1)), 1))
                 {
                     Controller.Tableau[Convert.ToInt32(reponse.Substring(0, 1)), Convert.ToInt32(reponse.Substring(2, 1))] = 1;
                     MainWindow.RefreshBoard(Controller.Tableau);
                     EnvoieReponse("OK");
                 }
+            }
+            else if (message == "CAT")
+            {
+
             }
         }
     }

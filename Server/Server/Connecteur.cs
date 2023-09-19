@@ -98,6 +98,7 @@ namespace Server
 
             Recevoir("OK");
         }
+
         public static void EnvoieReponse(string m)
         {
             string jsonString = JsonSerializer.Serialize(m);
@@ -107,6 +108,7 @@ namespace Server
 
             // Send the data through the socket.
             int bytesSent = server.Send(msg);
+
             if (m == "CAT")
             {
                 Recevoir("coord");
@@ -143,29 +145,30 @@ namespace Server
 
             Message = JsonSerializer.Deserialize<string>(data);
 
-            if (Message == "OK")
+            if (message == "OK")
             {
                 EnvoieReponse("CAT");
             }
-            else if (message != "coord")
+            else if (message == "coord")
             {
-                if (Message == message)
-                {
-                    //ok
-                }
-                else
-                {
-                    //pas ok... envoyer message pas corect
-                }
-            }
-            else
-            {
-                if (Controller.ValiderCoup(Convert.ToInt32(Message.Substring(0, 1)), Convert.ToInt32(Message.Substring(2, 1)), 1))
+                if (Controller.ValiderCoup(Convert.ToInt32(Message.Substring(0, 1)), Convert.ToInt32(Message.Substring(2, 1)), 2))
                 {
                     Controller.Tableau[Convert.ToInt32(Message.Substring(0, 1)), Convert.ToInt32(Message.Substring(2, 1))] = 2;
                     MainWindow.RefreshBoard(Controller.Tableau);
                     EnvoieReponse("OK");
                 }
+                else
+                {
+                    EnvoieReponse("Erreur");
+                }
+            }
+            else if (message == "CAT")
+            {
+                
+            }
+            else if(message == "Erreur")
+            {
+
             }
         }
     }

@@ -44,17 +44,17 @@ namespace Client
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    if (tab[i, j] == 0)
+                    if (tab[j, i] == 0)
                     {
                         button[compteur].Background = Brushes.Gray;
                         compteur++;
                     }
-                    else if (tab[i, j] == 1)
+                    else if (tab[j, i] == 1)
                     {
                         button[compteur].Background = Brushes.Red;
                         compteur++;
                     }
-                    else if (tab[i, j] == 2)
+                    else if (tab[j, i] == 2)
                     {
                         button[compteur].Background = Brushes.Blue;
                         compteur++;
