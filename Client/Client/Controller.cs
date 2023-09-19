@@ -13,7 +13,7 @@ namespace Client
         static int[,] _tableau = new int[3, 3];
         
         public static int[,] Tableau {  get { return _tableau; } private set { _tableau = value; } }
-        
+        public static int[] dernierCoup = new int[2];
 
         public static bool ValiderCoup(int x, int y,int joueur)
         {
@@ -28,6 +28,8 @@ namespace Client
         {
             if (ValiderCoup(x, y,joueur))
             {
+                dernierCoup[0] = x;
+                dernierCoup[1] = y;
                 Tableau[x, y] = joueur;
                 MainWindow.RefreshBoard(Controller.Tableau);
                 Connecteur.EnvoieCoup(x + "," + y);

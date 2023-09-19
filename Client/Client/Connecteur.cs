@@ -115,7 +115,20 @@ namespace Client
 
             if (message == "OK")
             {
-                EnvoieReponse("CAT");
+                if (reponse == "Erreur")
+                {
+                    Controller.Tableau[Controller.dernierCoup[0], Controller.dernierCoup[1]] = 0;
+                    MainWindow.RefreshBoard(Controller.Tableau);
+                }
+                else if (reponse == "1" || reponse == "2")
+                {
+                    //end game gagnant = reponse
+                }
+                else
+                {
+                    EnvoieReponse("CAT");
+
+                }
             }
             else if (message == "coord")
             {
@@ -125,10 +138,14 @@ namespace Client
                     MainWindow.RefreshBoard(Controller.Tableau);
                     EnvoieReponse("OK");
                 }
+                else
+                {
+                    EnvoieReponse("Erreur");
+                }
             }
             else if (message == "CAT")
             {
-
+                //Laisse l'utilisateur jouer son coup en cliquant sur le boutton
             }
         }
     }

@@ -38,65 +38,12 @@ namespace Server
                 listener.Listen(10);
 
                 server = listener.Accept();
+                Recevoir("CAT");
 
-                byte[] bytes;
-                string data = null;
-
-                while (true)
-                {
-                    bytes = new byte[1024];
-                    int bytesRec = server.Receive(bytes);
-                    data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
-                    if (data.IndexOf("<EOF>") > -1)
-                    {
-                        break;
-                    }
-                }
-
-                int pos = data.IndexOf("<EOF>");
-                if (pos >= 0)
-                {
-                    // String after founder
-                    data = data.Remove(pos);
-                }
-
-                string valid = JsonSerializer.Deserialize<string>(data);
-
-                if (valid == "CAT")
-                {
-                    
-                }
-                else
-                {
-                    EnvoieReponse("end");
-                }
             }
             catch (Exception e)
             {
             }
-        }
-
-        static void CommencerPartie()
-        {
-            bool gameOver = false;
-            do { 
-                //traitement de la partie
-
-            } while (gameOver == false);
-        }
-
-
-        public static void EnvoieCoup(string m)
-        {
-            string jsonString = JsonSerializer.Serialize(m);
-
-            // Encode the data string into a byte array.
-            byte[] msg = Encoding.ASCII.GetBytes(jsonString + "<EOF>");
-
-            // Send the data through the socket.
-            int bytesSent = server.Send(msg);
-
-            Recevoir("OK");
         }
 
         public static void EnvoieReponse(string m)
@@ -117,7 +64,10 @@ namespace Server
             {
                 Recevoir("CAT");
             }
-
+            else
+            {
+                Recevoir("OK");
+            }
         }
 
         public static void Recevoir(string message)
@@ -147,7 +97,19 @@ namespace Server
 
             if (message == "OK")
             {
-                EnvoieReponse("CAT");
+                if(Message=="Erreur")
+                {
+                    Controller.Tableau[Controller.dernierCoup[0], Controller.dernierCoup[1]] = 0;
+                    MainWindow.RefreshBoard(Controller.Tableau);
+                }
+                else if (Message=="1" || Message == "2")
+                {
+                    //end game gagnant = Message
+                }
+                else
+                {
+                    EnvoieReponse("CAT");
+                }
             }
             else if (message == "coord")
             {
@@ -164,10 +126,7 @@ namespace Server
             }
             else if (message == "CAT")
             {
-                
-            }
-            else if(message == "Erreur")
-            {
+                //Laisse l'utilisateur jouer son coup en cliquant sur le boutton
 
             }
         }

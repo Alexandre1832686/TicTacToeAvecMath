@@ -12,6 +12,8 @@ namespace Server
 
         public static int[,] Tableau { get { return _tableau; } private set { _tableau = value; } }
 
+        public static int[] dernierCoup = new int[2];
+
 
         public static bool ValiderCoup(int x, int y, int joueur)
         {
@@ -26,9 +28,11 @@ namespace Server
         {
             if (ValiderCoup(x, y, joueur))
             {
+                dernierCoup[0] = x;
+                dernierCoup[1] = y;
                 Tableau[x, y] = joueur;
                 MainWindow.RefreshBoard(Tableau);
-                Connecteur.EnvoieCoup(x + "," + y);
+                Connecteur.EnvoieReponse(x + "," + y);
                
                 return true;
             }
