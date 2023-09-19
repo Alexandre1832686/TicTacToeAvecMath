@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Automation.Peers;
+using System.Windows.Media;
 
 namespace Client
 {
@@ -17,9 +19,17 @@ namespace Client
 
         public static bool ValiderCoup(int x, int y,int joueur)
         {
+
             if(ValiderCoupDispo(x,y)&&ValiderCoupLegal(x, y)&&ValiderCoupNombreDeTourCorrect(joueur))
             {
-                return true;
+                if (ValideVictoire(Tableau) == 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    Connecteur.EnvoieReponse(ValideVictoire(Tableau).ToString());
+                }
             }
             return false;
         }
@@ -86,6 +96,34 @@ namespace Client
             }
 
             return false;
+        }
+        public static int ValideVictoire(int[,] tab)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                   
+                    if (tab[j, 0] == tab[j, 1] && tab[j, 1] == tab[j, 2] )
+                    {
+                        return tab[j, 0];
+                    }
+                    if (tab[0, i] == tab[1, i] && tab[1, i] == tab[2, i])
+                    {
+                        return tab[1, i];
+                    }
+                    if (tab[0, 2] == tab[1, 1] && tab[2,0] == tab[1, 1])
+                    {
+                        return tab[1, 1];
+                    }
+                    if (tab[2, 2] == tab[1, 1] && tab[0, 0] == tab[1, 1])
+                    {
+                        return tab[1, 1];
+                    }
+                }
+            }
+
+            return 0;
         }
 
         
